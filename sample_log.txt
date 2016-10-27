@@ -1,0 +1,13 @@
+store:results[0]:weight:4
+store:results[1]:weight:7
+add:results[1]:weight:results[1].weight:129
+add:results[1]:weight:results[1].weight:17
+add:results[0]:weight:results[0].weight:2
+store:results[0]:title:"okay like overwrite this"
+store::what:"we can set nonexistent props on the root object"
+sort:results:weight:-1
+store:values:0:7
+store:values:1:4
+store:values:2:6
+store:values:3:1
+sort:values::1
