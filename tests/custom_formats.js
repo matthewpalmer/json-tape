@@ -16,10 +16,7 @@ module.exports = (done) => {
 		}
 	};
 
-	const replayer = require('../command_player')({
-		instructionSet: customActions,
-		tokenizer: customTokizer
-	});
+	const replayer = require('../tape_player')(customTokizer, customActions);
 
 	const original = [];
 	const expected = [-1, 1];

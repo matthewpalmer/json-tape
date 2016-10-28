@@ -1,7 +1,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const stream = fs.createReadStream(__dirname + '/sample_log.txt');
-const replayer = require('../command_player')();
+const replayer = require('../tape_player')();
 
 module.exports = (done) => {
 	const original = {

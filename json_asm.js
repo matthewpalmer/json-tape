@@ -1,5 +1,6 @@
+const safe = require('safe-access')
 // See tests/sample_log.txt for an example of what this can handle.
-module.exports = (access = require('safe-access')) => {
+module.exports = (access=safe) => {
 	const self = {};
 
 	self.add = (state, writeParent, writeProperty, operand1, operand2) => {

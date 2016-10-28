@@ -2,7 +2,7 @@
   "name": "json-tape",
   "version": "0.0.3",
   "description": "Executes a series of commands on an initial state.",
-  "main": "command_player.js",
+  "main": "tape_player.js",
   "scripts": {
     "test": "node tests/test.js"
   },
