@@ -1,6 +1,6 @@
 {
   "name": "command-player",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Executes a series of commands on an initial state.",
   "main": "command_player.js",
   "scripts": {
