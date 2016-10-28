@@ -20,7 +20,7 @@ const expected = { results:
 	what: 'we can set nonexistent props on the root object'
 };
 
-replayer.replay(stream, original, (error, mutated) => {
+replayer.play(stream, original, (error, mutated) => {
 	assert(JSON.stringify(mutated) === JSON.stringify(expected));
 	console.log('Sample log stream passed.');
 });

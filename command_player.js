@@ -4,7 +4,7 @@ module.exports = ({
 } = {}) => {
 	const self = {};
 
-	self.replay = (logStream, initial, done = () => {}) => {
+	self.play = (logStream, initial, done = () => {}) => {
 		logStream.on('data', (chunk) => {
 			const commands = tokenizer.processChunk(chunk);
 			commands.forEach(command => {

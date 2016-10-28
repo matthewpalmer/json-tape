@@ -2,7 +2,25 @@
 
 Executes a series of commands on an initial state.
 
-## Getting Started
+```
+npm install --save command-player
+```
+
+## Quick start
+
+command-player can be run using the default tokenizer and instruction set to execute a series of `json_asm` commands.
+
+```js
+const commandPlayer = require('command-player')(); // <- Pass `tokenizer` or `instructionSet` as parameters to override
+const state = {};
+const commandStream = getCommandStream(); // A readable stream of commands to execute.
+
+commandPlayer.play(commandStream, state, (error, result) => {
+	console.log('Finished playing the command stream', error, result);
+});
+```
+
+## More details
 
 node-command-player lets you apply a sequence of commands to an initial state.
 The format of the commands and the application of those commands to the state is customisable via the `tokenizer` and `instructionSet` parameters respectively.
@@ -44,7 +62,7 @@ And so after running the command-player we end up with the resulting state
 }
 ```
 
-### `json_asm`
+## `json_asm`
 
 `json_asm` is a little instruction format that allows for efficient mutation of a 
 JSON object by specifying changes with simple commands (`load`, `store`, `add`, `sort`, etc.).

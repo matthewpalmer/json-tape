@@ -25,7 +25,7 @@ const expected = [-1, 1];
 
 console.log('JSON custom format and instruction set');
 
-replayer.replay(stream, original, (error, mutated) => {
+replayer.play(stream, original, (error, mutated) => {
 	assert(mutated[0] === expected[0]);
 	assert(mutated[1] === expected[1]);
 	console.log('JSON passed.')
