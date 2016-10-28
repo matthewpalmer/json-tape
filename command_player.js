@@ -4,22 +4,33 @@ module.exports = ({
 } = {}) => {
 	const self = {};
 
-	self.play = (logStream, initial, done = () => {}) => {
-		logStream.on('data', (chunk) => {
-			const commands = tokenizer.processChunk(chunk);
+	self.play = (source, initial, done = () => {}) => {
+		if (typeof source === 'string') {
+			// Treat as string
+			const commands = tokenizer.processChunk(source);
+			executeCommands(commands);
+		} else {
+			// Treat as stream
+			source.on('data', (chunk) => {
+				const commands = tokenizer.processChunk(chunk);
+				executeCommands(commands);
+			});
+
+			source.on('end', () => {
+				done(null, initial);
+			});
+
+			source.on('error', (error) => {
+				done(error);
+			});
+		}
+
+		const executeCommands = (commands) => {
 			commands.forEach(command => {
 				if (!command.op) return done('Invalid command:' + JSON.stringify(command));
 				instructionSet[command.op](initial, ...command.args);
 			});
-		});
-
-		logStream.on('end', () => {
-			done(null, initial);
-		});
-
-		logStream.on('error', (error) => {
-			done(error);
-		});
+		};
 	};
 
 	return self;
