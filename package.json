@@ -1,12 +1,12 @@
 {
   "name": "log_replayer",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Replays a command log on an initial state.",
   "main": "log_replayer.js",
   "scripts": {
     "test": "node tests/test.js && node tests/custom_formats.js"
   },
-  "author": "",
+  "author": "Matthew Palmer",
   "license": "ISC",
   "dependencies": {
     "safe-access": "^0.1.0"
