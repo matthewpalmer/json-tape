@@ -3,7 +3,7 @@ module.exports = (access = require('safe-access')) => {
 	const self = {};
 
 	self.add = (state, writeParent, writeProperty, operand1, operand2) => {
-		const result = self.load(state, operand1) + self.load(state, operand2);
+		const result = (self.load(state, operand1) || 0) + (self.load(state, operand2) || 0);
 		self.store(state, writeParent, writeProperty, result);
 	},
 

@@ -15,7 +15,7 @@ module.exports = () => {
 	// and returns { op: "OP_NAME", args: ["ARG_1", "ARG_2", "ARG_3"]} 
 	self.commandFromString = (string) => {
 		const command = {};
-		const parts = string.split(self.fieldDelimiter)
+		const parts = string.split(self.fieldDelimiter).map(s => s.trim());
 		command.op = parts[0];
 		command.args = parts.slice(1);
 
