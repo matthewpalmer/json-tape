@@ -1,10 +1,10 @@
 {
-  "name": "command-player",
-  "version": "0.0.2",
+  "name": "json-tape",
+  "version": "0.0.1",
   "description": "Executes a series of commands on an initial state.",
   "main": "command_player.js",
   "scripts": {
-    "test": "node tests/test.js && node tests/custom_formats.js"
+    "test": "node tests/test.js"
   },
   "author": "Matthew Palmer",
   "license": "ISC",
