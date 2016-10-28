@@ -1,17 +1,17 @@
-# node-command-player
+# json-tape
 
 Executes a series of commands on an initial state.
 
 ```
-npm install --save command-player
+npm install --save json-tape
 ```
 
 ## Quick start
 
-command-player can be run using the default tokenizer and instruction set to execute a series of `json_asm` commands.
+json-tape can be run using the default tokenizer and instruction set to execute a series of `json_asm` commands.
 
 ```js
-const commandPlayer = require('command-player')(); // <- Pass `tokenizer` or `instructionSet` as parameters to override
+const commandPlayer = require('json-tape')(); // <- Pass `tokenizer` or `instructionSet` as parameters to override
 const state = {};
 const commandStream = getCommandStream(); // A readable stream of commands to execute.
 
@@ -22,11 +22,11 @@ commandPlayer.play(commandStream, state, (error, result) => {
 
 ## More details
 
-node-command-player lets you apply a sequence of commands to an initial state.
+json-tape lets you apply a sequence of commands to an initial state.
 The format of the commands and the application of those commands to the state is customisable via the `tokenizer` and `instructionSet` parameters respectively.
 
 We also came up with a low level method for applying operations to a JSON object which is caled `json_asm` which might be interesting, details are at the bottom.
-(Note that node-command-player doesn't require that you use `json_asm` instruction set or the `plain_text_delimiters` log format—they are there as example).
+(Note that json-tape doesn't require that you use `json_asm` instruction set or the `plain_text_delimiters` log format—they are there as example).
 
 Looking at an example command log (a simplification of `/tests/sample_log.txt`), we might have some `json_asm` commands to replay on the initial state.
 
@@ -50,10 +50,10 @@ What happens when we run the default log replayer on this log?
 		{ op: 'add', args: ['results[0]','weight','results[0].weight', '2'] }
 	]
 	```
-- The command-player then plays each of these command objects on the state by calling the function matching `op` on the `json_asm` instruction set.
+- The json-tape then plays each of these command objects on the state by calling the function matching `op` on the `json_asm` instruction set.
   `json_asm` is responsible for mutating the state and doing futher processing of the arguments to reflect the command called.
 
-And so after running the command-player we end up with the resulting state
+And so after running the json-tape we end up with the resulting state
 
 ```
 // After we play each command
@@ -66,7 +66,7 @@ And so after running the command-player we end up with the resulting state
 
 `json_asm` is a little instruction format that allows for efficient mutation of a 
 JSON object by specifying changes with simple commands (`load`, `store`, `add`, `sort`, etc.).
-It's not required to use node-command-player, but it's kind of interesting.
+It's not required to use json-tape, but it's kind of interesting.
 
 Look at the following command specified using `json_asm` and the `plain_text_delimiters` log format
 
