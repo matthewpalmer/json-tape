@@ -1,15 +1,15 @@
 module.exports = ({
-	parser = require('./plain_text_delimiters')(),
-	actions = require('./json_asm')()
+	tokenizer = require('./plain_text_delimiters')(),
+	isa = require('./json_asm')()
 } = {}) => {
 	const self = {};
 
 	self.replay = (logStream, initial, done = () => {}) => {
 		logStream.on('data', (chunk) => {
-			const commands = parser.processChunk(chunk);
+			const commands = tokenizer.processChunk(chunk);
 			commands.forEach(command => {
 				if (!command.action) return done('Invalid command:' + JSON.stringify(command));
-				actions[command.action](initial, ...command.args);
+				isa[command.action](initial, ...command.args);
 			});
 		});
 

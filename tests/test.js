@@ -14,7 +14,7 @@ const original = {
 
 
 
-console.log('Sample log stream (json_asm, plain_text_delimiters)');
+console.log('Default log stream (json_asm, plain_text_delimiters)');
 
 const expected = { results: 
 	[ { weight: 153, title: 'one twenty' }, { weight: 6, title: 'okay like overwrite this' } ],
