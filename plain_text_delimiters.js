@@ -14,8 +14,32 @@ module.exports = () => {
 	// Takes a formatted command from the log file (i.e. `stringFromCommand`) 
 	// and returns { op: "OP_NAME", args: ["ARG_1", "ARG_2", "ARG_3"]} 
 	self.commandFromString = (string) => {
+		const parts = [];
+		var acc = '';
+		var matchingQuote = null;
+
+		for (var i = 0; i < string.length; i++) {
+			if (string[i] === '"' || string[i] === "'") {
+				acc += string[i];
+				
+				if (!matchingQuote) {
+					matchingQuote = string[i];
+				} else if (matchingQuote === string[i]) {
+					matchingQuote = null;
+				}
+			} else if (string[i] === self.fieldDelimiter && !matchingQuote) {
+				parts.push(acc);
+				acc = '';
+			} else {
+				acc += string[i];
+			}
+		}
+
+		if (acc) {
+			parts.push(acc);
+		}
+
 		const command = {};
-		const parts = string.split(self.fieldDelimiter).map(s => s.trim());
 		command.op = parts[0];
 		command.args = parts.slice(1);
 

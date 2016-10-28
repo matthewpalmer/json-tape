@@ -32,7 +32,11 @@ module.exports = (access = require('safe-access')) => {
 		};
 
 		array.sort((a,b) => get(a, property) >= get(b, property) ? order : -order);
-	}
+	};
+
+	self.jump = (state, amount) => {
+		
+	};
 
 	return self;
 };

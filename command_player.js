@@ -13,7 +13,7 @@ module.exports = ({
 			});
 		});
 
-		logStream.on('close', () => {
+		logStream.on('end', () => {
 			done(null, initial);
 		});
 
