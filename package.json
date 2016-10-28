@@ -1,8 +1,8 @@
 {
-  "name": "log_replayer",
+  "name": "command-player",
   "version": "0.0.1",
-  "description": "Replays a command log on an initial state.",
-  "main": "log_replayer.js",
+  "description": "Executes a series of commands on an initial state.",
+  "main": "command_player.js",
   "scripts": {
     "test": "node tests/test.js && node tests/custom_formats.js"
   },

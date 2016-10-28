@@ -1,6 +1,6 @@
 # node-command-player
 
-Replays a command log on an initial state.
+Executes a series of commands on an initial state.
 
 ## Getting Started
 
@@ -28,11 +28,11 @@ What happens when we run the default log replayer on this log?
 - Our log format tokenizer (`plain_text_delimiters`) turns the log into command objects, i.e.
 	```js
 	[
-		{ action: 'store', args: ['results[0]','weight','4'] },
-		{ action: 'add', args: ['results[0]','weight','results[0].weight', '2'] }
+		{ op: 'store', args: ['results[0]','weight','4'] },
+		{ op: 'add', args: ['results[0]','weight','results[0].weight', '2'] }
 	]
 	```
-- The command-player then plays each of these command objects on the state by calling the function matching `action` on the `json_asm` instruction set.
+- The command-player then plays each of these command objects on the state by calling the function matching `op` on the `json_asm` instruction set.
   `json_asm` is responsible for mutating the state and doing futher processing of the arguments to reflect the command called.
 
 And so after running the command-player we end up with the resulting state

@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const stream = fs.createReadStream(__dirname + '/sample_log.txt');
 
-const replayer = require('../log_replayer')();
+const replayer = require('../command_player')();
 
 const original = {
 	results: [
@@ -11,8 +11,6 @@ const original = {
 	],
 	values: []
 };
-
-
 
 console.log('Default log stream (json_asm, plain_text_delimiters)');
 

@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const stream = fs.createReadStream(__dirname + '/custom_log.txt');
 
-const customParser = {
+const customTokizer = {
 	processChunk: (chunk) => {
 		return JSON.parse(chunk.toString());
 	}
@@ -15,15 +15,15 @@ const customActions = {
 	}
 };
 
-const replayer = require('../log_replayer')({
+const replayer = require('../command_player')({
 	instructionSet: customActions,
-	parser: customParser
+	tokenizer: customTokizer
 });
 
 const original = [];
 const expected = [-1, 1];
 
-console.log('JSON custom format and instructionSet');
+console.log('JSON custom format and instruction set');
 
 replayer.replay(stream, original, (error, mutated) => {
 	assert(mutated[0] === expected[0]);

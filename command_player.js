@@ -1,6 +1,6 @@
 module.exports = ({
 	tokenizer = require('./plain_text_delimiters')(),
-	isa = require('./json_asm')()
+	instructionSet = require('./json_asm')()
 } = {}) => {
 	const self = {};
 
@@ -8,8 +8,8 @@ module.exports = ({
 		logStream.on('data', (chunk) => {
 			const commands = tokenizer.processChunk(chunk);
 			commands.forEach(command => {
-				if (!command.action) return done('Invalid command:' + JSON.stringify(command));
-				isa[command.action](initial, ...command.args);
+				if (!command.op) return done('Invalid command:' + JSON.stringify(command));
+				instructionSet[command.op](initial, ...command.args);
 			});
 		});
 

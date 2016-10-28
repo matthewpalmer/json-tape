@@ -5,22 +5,22 @@ module.exports = () => {
 		commentToken: '#'
 	};
 
-	// Takes a { action: "NAME", args: [ "ARG_1", ... ]} and 
+	// Takes a { op: "NAME", args: [ "ARG_1", ... ]} and 
 	// returns the formatted command suitable to write to a log file
-	self.stringFromCommand = ({ action, args }) => {
-		return [action].concat(args).join(self.fieldDelimiter) + self.commandDelimiter;
+	self.stringFromCommand = ({ op, args }) => {
+		return [op].concat(args).join(self.fieldDelimiter) + self.commandDelimiter;
 	};
 
 	// Takes a formatted command from the log file (i.e. `stringFromCommand`) 
-	// and returns { action: "ACTION_NAME", args: ["ARG_1", "ARG_2", "ARG_3"]} 
+	// and returns { op: "OP_NAME", args: ["ARG_1", "ARG_2", "ARG_3"]} 
 	self.commandFromString = (string) => {
 		const command = {};
 		const parts = string.split(self.fieldDelimiter)
-		command.action = parts[0];
+		command.op = parts[0];
 		command.args = parts.slice(1);
 
-		if (!command.action || !command.args) return;
-		if (command.action[0] === self.commentToken) return;
+		if (!command.op || !command.args) return;
+		if (command.op[0] === self.commentToken) return;
 		return command;
 	};
 
