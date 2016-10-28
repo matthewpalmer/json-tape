@@ -1,6 +1,6 @@
 module.exports = ({
-	parser = require('./command_parser')(),
-	actions = require('./log_actions')()
+	parser = require('./plain_text_delimiters')(),
+	actions = require('./json_asm')()
 } = {}) => {
 	const self = {};
 
@@ -19,7 +19,7 @@ module.exports = ({
 
 		logStream.on('error', (error) => {
 			done(error);
-		})
+		});
 	};
 
 	return self;
