@@ -1,11 +1,12 @@
-const safe = require('safe-access')
+const jsonPointer = require('./json-pointer');
+
 // See tests/sample_log.txt for an example of what this can handle.
-module.exports = (access=safe) => {
+module.exports = (access=jsonPointer) => {
 	const self = {};
 
-	self.add = (state, writeParent, writeProperty, operand1, operand2) => {
+	self.add = (state, lvalue, operand1, operand2) => {
 		const result = (self.load(state, operand1) || 0) + (self.load(state, operand2) || 0);
-		self.store(state, writeParent, writeProperty, result);
+		self.store(state, lvalue, result);
 	},
 
 	self.load = (state, operand) => {
@@ -18,15 +19,15 @@ module.exports = (access=safe) => {
 		}
 
 		// Dereference pointers
-		return access(state, operand);
+		return access.get(state, operand);
 	},
 
-	self.store = (state, writeParent, writeProperty, value) => {
-		access(state, writeParent)[writeProperty] = self.load(state, value);
+	self.store = (state, path, value) => {
+		access.set(state, path, self.load(state, value));
 	},
 
 	self.sort = (state, path, property, order) => {
-		const array = access(state, path);
+		const array = access.get(state, path);
 		const get = (obj, property) => {
 			if (!property) return obj;
 			return obj[property];

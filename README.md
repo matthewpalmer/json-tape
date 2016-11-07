@@ -32,8 +32,8 @@ Looking at an example command log (a simplification of `/tests/sample_log.txt`),
 
 ```text
 // Commands
-store:results[0]:weight:4
-add:results[0]:weight:results[0].weight:2
+store:/results/0/weight:4
+add:/results/0/weight:/results/0/weight:2
 
 // Initial state
 {
@@ -46,8 +46,8 @@ What happens when we run the default log replayer on this log?
 - Our log format tokenizer (`plain_text_delimiters`) turns the log into command objects, i.e.
 	```js
 	[
-		{ op: 'store', args: ['results[0]','weight','4'] },
-		{ op: 'add', args: ['results[0]','weight','results[0].weight', '2'] }
+		{ op: 'store', args: ['/results/0','weight','4'] },
+		{ op: 'add', args: ['/results/0','weight','/results/0/weight', '2'] }
 	]
 	```
 - The json-tape then plays each of these command objects on the state by calling the function matching `op` on the `json_asm` instruction set.
@@ -71,13 +71,10 @@ It's not required to use json-tape, but it's kind of interesting.
 Look at the following command specified using `json_asm` and the `plain_text_delimiters` log format
 
 ```
-add:results[0]:weight:results[0].weight:2
+add:/results/0/weight:/results/0/weight:2
 ```
 
 - `add` is the action, i.e. the opcode
-- `results[0]` through to `2` are the arguments passed to the `json_asm.add()` function
-- `results[0]` and `weight` provide the location to which the result should be stored 
-	(L-values need to be specified with the path to the parent object separate from the property to set so that we can reliably find the object to mutate,
-	while R-values are specified with the full path, i.e. `results[0]:weight` for the L-value, `results[0].weight` for the R-value)
-- `results[0].weight` and `2` are the operands for `add`. `json_asm` will dereference pointers and convert values to their true JavaScript object as necessary.
-	String literal operands need to be wrapped in quotes—unquoted strings are treated as pointers
+- `/results/0/weight` is the lvalue, i.e. where we should store the result
+- `/results/2/weight` and `2` are the operands for `add`. `json_asm` will dereference pointers
+- String literal operands need to be wrapped in quotes—unquoted strings are treated as pointers
