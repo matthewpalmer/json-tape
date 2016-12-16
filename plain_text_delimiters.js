@@ -48,13 +48,12 @@ module.exports = () => {
 		return command;
 	};
 
-	// Returns a list of commands discovered in this chunk of data
-	self.processChunk = (chunk) => {
-		// TODO: handle cross chunk boundaries
-		return chunk.toString()
-			.split(self.commandDelimiter)
-			.map(self.commandFromString)
-			.filter(c => !!c);
+	self.statements = (string) => {
+		return string.split(self.commandDelimiter).filter(c => !!c);
+	};
+
+	self.command = (line) => {
+		return self.commandFromString(line);
 	};
 
 	return self;

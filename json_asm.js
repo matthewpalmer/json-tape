@@ -1,6 +1,5 @@
 const jsonPointer = require('./json-pointer');
 
-// See tests/sample_log.txt for an example of what this can handle.
 module.exports = (access=jsonPointer) => {
 	const self = {};
 
@@ -36,8 +35,17 @@ module.exports = (access=jsonPointer) => {
 		array.sort((a,b) => get(a, property) >= get(b, property) ? order : -order);
 	};
 
-	self.jump = (state, amount) => {
-		
+	self.splice = (state, path, start, deleteCount, ...newValues) => {
+		const array = access.get(state, path);
+		array.splice(self.load(state, start), 
+			self.load(state, deleteCount), 
+			...(newValues.map(v => self.load(state, v))));
+	};
+
+	self.if_not_equal = (state, operand1, operand2, command) => {
+		if (self.load(state, operand1) == self.load(state, operand2)) return;
+		const next_instr = self.load(state, '/__index__') + 1;
+		self.splice(state, '/__statements__', next_instr, 0, command);
 	};
 
 	return self;
