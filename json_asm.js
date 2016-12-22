@@ -1,6 +1,4 @@
-const jsonPointer = require('./json-pointer');
-
-module.exports = (access=jsonPointer) => {
+module.exports = (access) => {
 	const self = {};
 
 	self.add = (state, lvalue, operand1, operand2) => {

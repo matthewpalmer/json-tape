@@ -6,6 +6,11 @@ Executes a series of commands on an initial state.
 npm install --save json-tape
 ```
 
+* Faster mutation of JSON when combined with [node-rapidJSON](https://github.com/matthewpalmer/node-rapidjson)
+* Delay evaluation of properties to the client side to reduce server-side load
+* Use self-modifying command logs for conditionals and loops
+* Easily extend the base instruction set to add your own custom commands 
+
 ## Quick start
 
 json-tape can be run using the default tokenizer and instruction set to execute a series of `json_asm` commands.
@@ -13,10 +18,10 @@ json-tape can be run using the default tokenizer and instruction set to execute 
 ```js
 const commandPlayer = require('json-tape')(); // <- Pass `tokenizer` or `instructionSet` as parameters to override
 const state = {};
-const commandStream = getCommandStream(); // A readable stream of commands to execute.
+const commands = /* A string of commands */;
 
-commandPlayer.play(commandStream, state, (error, result) => {
-	console.log('Finished playing the command stream', error, result);
+commandPlayer.play(commands, state, (error, result) => {
+	console.log('Finished playing the command log', error, result);
 });
 ```
 

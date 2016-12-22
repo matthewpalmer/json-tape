@@ -2,7 +2,6 @@
 
 const assert = require('assert');
 const fs = require('fs');
-const stream = fs.createReadStream(__dirname + '/sample_log.txt');
 const replayer = require('../tape_player')();
 
 const state = {};
@@ -32,7 +31,12 @@ store:/condition:555
 splice:/__statements__:/__index__:1
 store:/condition:666
 `;
-
-replayer.play(commands, state, (error, mutated) => {
-  console.log(mutated);
-});
+module.exports = (done) => {
+  replayer.play(commands, state, (error, mutated) => {
+    assert(mutated.test2 == 5);
+    assert(mutated.test4 == 7);
+    assert(mutated.condition == 555)
+    console.log('Self-modifying tape passed');
+    done();
+  });
+}

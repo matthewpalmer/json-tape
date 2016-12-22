@@ -1,8 +1,13 @@
+const access = require('./json_pointer');
 const defaultTokenizer = require('./plain_text_delimiters')();
-const defaultInstructionSet = require('./json_asm')()
+const defaultInstructionSet = require('./json_asm')(access)
 
 module.exports = (tokenizer=defaultTokenizer, instructionSet=defaultInstructionSet) => {
 	const self = {
+		tokenizer,
+		instructionSet,
+		access,
+
 		statements: '__statements__', // Program
 		index: '__index__' // Program counter
 	};
@@ -27,3 +32,5 @@ module.exports = (tokenizer=defaultTokenizer, instructionSet=defaultInstructionS
 
 	return self;
 };
+
+

@@ -1,6 +1,6 @@
 const assert = require('assert');
 const fs = require('fs');
-const stream = fs.createReadStream(__dirname + '/sample_log.txt');
+const stream = fs.readFileSync(__dirname + '/sample_log.txt').toString();
 const replayer = require('../tape_player')();
 
 module.exports = (done) => {
@@ -22,7 +22,7 @@ module.exports = (done) => {
 
 	replayer.play(stream, original, (error, mutated) => {
 		assert(JSON.stringify(mutated) === JSON.stringify(expected));
-		console.log('Sample log stream passed.');
+		console.log('Sample log stream passed');
 		done();
 	});
 };
