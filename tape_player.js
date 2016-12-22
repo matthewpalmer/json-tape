@@ -15,19 +15,34 @@ module.exports = (tokenizer=defaultTokenizer, instructionSet=defaultInstructionS
 	self.play = (source, initial, done = () => {}) => {
 		initial[self.statements] = tokenizer.statements(source);
 
-		for (var i = 0; i < initial[self.statements].length; i++) {
-			initial[self.index] = i;
+		function next(finished) {
+			const command = tokenizer.command(initial[self.statements][initial[self.index]]);
+			if (!command) {
+				initial[self.index]++;
+				return next(finished);
+			};
 
-			const command = tokenizer.command(initial[self.statements][i]);
-			if (!command) continue;
 			if (!command.op) return done('Invalid command:' + JSON.stringify(command));
-			instructionSet[command.op](initial, ...command.args);
+
+			const wait = instructionSet[command.op](initial, ...command.args);
+
+			function go() {
+				initial[self.index]++;
+				if (initial[self.index] >= initial[self.statements].length) return finished();
+				next(finished);
+			}
+
+			if (wait && typeof wait === 'number') return setTimeout(go, wait);
+			go();
 		}
 
-		delete initial[self.statements];
-		delete initial[self.index];
-		
-		done(null, initial);
+		initial[self.index] = 0;
+		next(() => {
+			delete initial[self.statements];
+			delete initial[self.index];
+			
+			done(null, initial);
+		});
 	};
 
 	return self;
