@@ -1,6 +1,6 @@
 {
   "name": "json-tape",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Executes a series of commands on an initial state.",
   "main": "tape_player.js",
   "scripts": {
