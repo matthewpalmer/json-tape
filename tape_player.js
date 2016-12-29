@@ -26,14 +26,16 @@ module.exports = (tokenizer=defaultTokenizer, instructionSet=defaultInstructionS
 
 			const wait = instructionSet[command.op](initial, ...command.args);
 
-			function go() {
-				initial[self.index]++;
-				if (initial[self.index] >= initial[self.statements].length) return finished();
-				next(finished);
+			function go(inc) {
+				return function() {
+					if (inc) initial[self.index]++;
+					if (initial[self.index] >= initial[self.statements].length) return finished();
+					next(finished);
+				}
 			}
 
-			if (wait && typeof wait === 'number') return setTimeout(go, wait);
-			go();
+			if (wait && typeof wait === 'number') return setTimeout(go(false), wait);
+			go(true)();
 		}
 
 		initial[self.index] = 0;
@@ -47,5 +49,3 @@ module.exports = (tokenizer=defaultTokenizer, instructionSet=defaultInstructionS
 
 	return self;
 };
-
-
